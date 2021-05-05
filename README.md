@@ -1,6 +1,6 @@
 # scd-bin-crc-gui (Qt C++)
 
-Append CRC16 (16 bit CRC) to a bin file and set the file to the required size.<br/>
+Append CRC16 (16 bit CRC) to a bin file and set the file to the required size.<br/><br/>
 This is a <b>GUI</b> version of <a href="https://github.com/SC-Develop/scd-bin-crc-cli"><b>scd-bin-crc-cli</b></a>.<br/>See <a href="https://github.com/SC-Develop/scd-bin-crc-cli"><b>scd-bin-crc-cli</b> </a> for further information.
 <br/>
 <br/>
