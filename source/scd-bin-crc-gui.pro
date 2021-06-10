@@ -26,12 +26,10 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-    mainwindow.cpp \
-    crc16.cpp
+    mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
-    crc16.h
+        mainwindow.h
 
 
 FORMS += \

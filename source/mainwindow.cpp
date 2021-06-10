@@ -11,6 +11,41 @@
 #include "QByteArray"
 #include "crc16.h"
 
+/**
+ * @brief crc16Add
+ * @param data
+ */
+uint16_t crc_calc(char *buff, unsigned int len)
+{
+    uint16_t crc = 0xFFFF;
+    uint16_t crcshr8;
+    uint16_t crcshl8;
+    uint16_t c1shl12;
+    uint16_t c1shl05;
+    uint16_t c1shl00;
+    uint8_t  c1;
+    uint8_t  byte;
+
+    while(len--)
+    {
+       byte   = (uint8_t) *buff++;
+
+       crcshr8 = crc >> 8;
+       crcshl8 = crc << 8;
+
+       c1 = crcshr8 ^ byte;
+       c1 = c1 ^ (c1 >> 4);
+
+       c1shl05 = (uint16_t)(c1 << 5);
+       c1shl12 = (uint16_t)(c1 << 12);
+       c1shl00 = (uint16_t)(c1 << 0 );
+
+       crc = crcshl8 ^ c1shl12  ^ c1shl05 ^ c1shl00;
+    }
+
+    return crc;
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -121,19 +156,11 @@ void MainWindow::on_pushButton_clicked()
            // calc file crc *******************************************************************************
 
            int blen = buff.length();
-           int flen = file.size();
+           // int flen = file.size();
 
-           quint16 crc = qChecksum(buff.data(),buff.length(),Qt::ChecksumItuV41);
+           quint16 crc; // = qChecksum(buff.data(),buff.length(),Qt::ChecksumItuV41);
 
-           crc16Init();
-
-           for (int n=0; n<blen;n++)
-           {
-              uint8_t c = (uint8_t) buff.at(n);
-              crc16Add(c);
-           }
-
-           crc = crcGet();
+           crc = crc_calc(buff.data(),blen);
 
            QString hexcrc = QString("%1").arg(crc,4,16,QChar('0')).toLocal8Bit().toUpper();
 
